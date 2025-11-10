@@ -1,0 +1,208 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: #0b0d15;
+    color: #e7e7e7; 
+    min-height: 100vh;
+    line-height: 1.5;
+}
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.gradient{
+  position: relative;           
+  background: #0b0d15;        
+  z-index: 0;
+}
+
+.gradient::after,
+.gradient::before{
+  content: "";
+  position: fixed;             
+  inset: 0;                     
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 12px;         
+  background: conic-gradient(from var(--angle),
+              #00ffd5, #cc00ff, #ffffff, #cc00ff, #00ffd5);
+  padding: 3px;                
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+
+  animation: spin 6s linear infinite;
+  transition: opacity 1.2s ease;
+}
+
+.gradient::before{
+  filter: blur(18px);
+  opacity: .5;
+}
+@keyframes spin{
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+.container{
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;        
+    overflow: hidden;
+}
+h1{
+    font-size: 4rem;
+    color: rgb(232, 198, 255);
+    margin-bottom: 2rem;
+    z-index: 6;
+}
+
+.timer{
+  position: absolute;   
+  z-index: 3;           
+  margin-top: 5rem;     
+  padding: .75rem 1.25rem;
+  top: 65%;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(255,255,255,.06);
+  color: #e7e7e7;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+@keyframes in-from-left   { from { transform: translateX(-120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes in-from-right  { from { transform: translateX(120%);  opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes in-from-top    { from { transform: translateY(-120%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes in-from-bottom { from { transform: translateY(120%);  opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+
+@keyframes out-left {
+  0%   { transform: translate(0,0) rotate(var(--start)); opacity: 1; }
+  50%  { transform: translate(calc(-1 * var(--dist, 120%)), 0) rotate(var(--start)); opacity: 1; }
+  100% { transform: translate(0,0) rotate(var(--start)); opacity: 1; }
+}
+@keyframes out-right {
+  0%   { transform: translate(0,0) rotate(var(--start)); opacity: 1; }
+  50%  { transform: translate(var(--dist, 120%), 0) rotate(var(--start)); opacity: 1; }
+  100% { transform: translate(0,0) rotate(var(--start)); opacity: 1; }
+}
+@keyframes out-top {
+  0%   { transform: translate(0,0) rotate(var(--start)); opacity: 1; }
+  50%  { transform: translate(0, calc(-1 * var(--dist, 120%))) rotate(var(--start)); opacity: 1; }
+  100% { transform: translate(0,0) rotate(var(--start)); opacity: 1; }
+}
+@keyframes out-bottom {
+  0%   { transform: translate(0,0) rotate(var(--start)); opacity: 1; }
+  50%  { transform: translate(0, var(--dist, 120%)) rotate(var(--start)); opacity: 1; }
+  100% { transform: translate(0,0) rotate(var(--start)); opacity: 1; }
+}
+
+.rec1.out-left   { animation: out-left   3s ease-in-out ; }
+.rec2.out-right  { animation: out-right  3s ease-in-out ; }
+.rec3.out-top    { animation: out-top    3s ease-in-out ; }
+.rec4.out-bottom { animation: out-bottom 3s ease-in-out ; }
+
+.rec1{ 
+    position: absolute;
+    --start: 25deg;
+    width: 240px;
+    height: 240px;
+    opacity: 0.6;
+    border: 4px solid transparent;
+    border-radius: 40px;
+    background-color: rgb(201, 35, 223);
+    z-index: 4;
+    transition: opacity .6s ease; 
+}
+.rec2{
+    --start: 75deg;
+    position: absolute; 
+    width: 290px;
+    height: 190px;
+    border: 4px solid transparent;
+    border-radius: 20px;
+    background-color: rgb(111, 36, 209);
+    z-index: 2;
+    transition: opacity .6s ease; 
+}
+.rec3{
+    --start: 45deg;
+    position: absolute; 
+    width: 190px;
+    height: 290px;
+    border: 4px solid transparent;
+    border-radius: 20px;
+    background-color: rgb(24, 226, 233);
+    z-index: 1;
+    transition: opacity .6s ease; 
+}
+.rec4{
+    --start: 0deg;
+    position: absolute; 
+    opacity: 0.5;
+    width: 290px;
+    height: 270px;
+    border: 4px solid transparent;
+    border-radius: 20px;
+    background-color: rgb(69, 24, 233);
+    z-index: 0;
+    transition: opacity .6s ease; 
+}
+
+.rec1, .rec2, .rec3, .rec4 { opacity: 0; transition: 1s ease;}
+
+@keyframes in-from-left   {
+  from { transform: translateX(-200%) rotate(var(--start)); opacity: 0; }
+  to   { transform: translateX(0)      rotate(var(--start)); opacity: 1; }
+}
+@keyframes in-from-right  {
+  from { transform: translateX(200%)  rotate(var(--start)); opacity: 0; }
+  to   { transform: translateX(0)     rotate(var(--start)); opacity: 1; }
+}
+@keyframes in-from-top    {
+  from { transform: translateY(-200%) rotate(var(--start)); opacity: 0; }
+  to   { transform: translateY(0)     rotate(var(--start)); opacity: 1; }
+}
+@keyframes in-from-bottom {
+  from { transform: translateY(200%)  rotate(var(--start)); opacity: 0; }
+  to   { transform: translateY(0)     rotate(var(--start)); opacity: 1; }
+}
+
+.rec4.rotateH   { animation: rotateHalf 15s linear infinite;}
+.rec3.rotateV   { animation: rotaterev 20s linear infinite;}
+.rec2.rotate  { animation: rotate 16s linear infinite;}
+.rec1.rotateH  { animation: rotateHalf 18s linear infinite;}
+
+.rec1.enter-left   { animation: in-from-left   3.2s cubic-bezier(.2,.8,.2,1) forwards; }
+.rec2.enter-top    { animation: in-from-top    2s cubic-bezier(.2,.8,.2,1) .08s forwards;}
+.rec3.enter-right  { animation: in-from-right  1s cubic-bezier(.2,.8,.2,1) .16s forwards; }
+.rec4.enter-bottom { animation: in-from-bottom 3s cubic-bezier(.2,.8,.2,1) .24s forwards; }
+
+@keyframes rotate {
+  from { transform: rotate(var(--start)); }
+  to   { transform: rotate(calc(360deg + var(--start))); }
+}
+@keyframes rotaterev {
+  from { transform: rotate(calc(360deg + var(--start))); }
+  to  { transform: rotate(var(--start)); } 
+}
+
+@keyframes rotateHalf {
+  0%   { transform: rotate(var(--start)); }
+  50%  { transform: rotate(calc(180deg + var(--start))); }
+  100% { transform: rotate(var(--start)); }
+}
+
