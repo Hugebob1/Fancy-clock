@@ -68,19 +68,27 @@ h1{
     margin-bottom: 2rem;
     z-index: 6;
 }
-
+.buttons{
+    position: absolute;      
+    top: 66%;
+    left: 50%;
+    transform: translateX(-50%); 
+    display: flex;
+    gap: 1.5rem;
+    z-index: 6;
+}
 .timer{
-  position: absolute;   
-  z-index: 3;           
-  margin-top: 5rem;     
-  padding: .75rem 1.25rem;
-  top: 65%;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.2);
-  background: rgba(255,255,255,.06);
-  color: #e7e7e7;
-  backdrop-filter: blur(6px);
-  cursor: pointer;
+  
+    z-index: 3;           
+    margin-top: 5rem;     
+    padding: .75rem 1.25rem;
+    
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(255,255,255,.06);
+    color: #e7e7e7;
+    backdrop-filter: blur(6px);
+    cursor: pointer;
 }
 
 @keyframes in-from-left   { from { transform: translateX(-120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
@@ -179,6 +187,10 @@ h1{
 @keyframes in-from-bottom {
   from { transform: translateY(200%)  rotate(var(--start)); opacity: 0; }
   to   { transform: translateY(0)     rotate(var(--start)); opacity: 1; }
+}
+
+.paused, .paused * {
+  animation-play-state: paused !important;
 }
 
 .rec4.rotateH   { animation: rotateHalf 15s linear infinite;}
